@@ -1,0 +1,87 @@
+<odoo>
+  <data>
+
+  <record id="view_ruta_camionera_tree" model="ir.ui.view">
+    <field name="name">view.ruta.camionera.tree</field>
+    <field name="model">ruta_camionera.ruta_camionera</field>
+    <field name="arch" type="xml">
+      <tree string="Rutas camioneras">
+        <field name="conductor" />
+        <field name="trabajo" />
+        <field name="unidad" />
+        <field name="sm_civil" />
+        <field name="cut_voca" />
+        <field name="boletos_normal" />
+        <field name="boletos_trasvale" />
+        <field name="boletos_ninio" />
+        <field name="balas" />
+      </tree>
+    </field>
+  </record>
+
+  <record id="view_ruta_camionera_form" model="ir.ui.view">
+    <field name="name">view.ruta.camionera.form</field>
+    <field name="model">ruta_camionera.ruta_camionera</field>
+    <field name="arch" type="xml">
+      <form name="ruta_camionera_form">
+        <sheet>
+          <div class="oe_title">
+            <label for="conductor" />
+            <h1>
+              <field name="conductor" placeholder="" />
+            </h1>
+            <group>
+              <field name="trabajo" />
+              <field name="fecha" />
+            </group>
+            <group>
+              <field name="unidad" placeholder="" />
+            </group>
+            <group>
+              <h2>Vueltas</h2>
+              <field name="sm_civil" placeholder="" />
+              <field name="cut_voca" placeholder="" />
+            </group>
+            <group>
+              <h2>Boletos</h2>
+              <field name="boletos_normal" placeholder="" />
+              <field name="boletos_trasvale" placeholder="" />
+              <field name="boletos_ninio" placeholder="" />
+            </group>
+            <group>
+              <h2>Balas</h2>
+              <field name="balas" placeholder="" />
+            </group>
+          </div>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <record id="action_ruta_camiones_views" model="ir.actions.act_window">
+    <field name="name">Ruta camiones</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">ruta_camionera.ruta_camionera</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+    <field name="help" type="html">
+      <p class="oe_view_nocontent_create">
+        Ruta camiones
+      </p>
+      <p>
+        agregue una ruta
+      </p>
+    </field>
+  </record>
+
+  <menuitem id="menu_ruta_camiones_root" name="Ruta camiones" sequence="10" groups="base.group_user"/>
+  <menuitem id="menu_ruta_camiones_categ" name="Ruta camionera" parent="menu_ruta_camiones_root" sequence="1"/>
+  <menuitem id="menu_ruta_camiones" name="Ruta camiones" parent="menu_ruta_camiones_categ" action="action_ruta_camiones_views" sequence="1"/>
+
+  <menuitem id="menu_ruta_camiones_reporte_categ" name="Reporte Diario" parent="menu_ruta_camiones_root" sequence="3"/>
+  <menuitem id="menu_ruta_camiones_reporte_semanal_categ" name="Reporte Semanal" parent="menu_ruta_camiones_root" sequence="5"/>
+
+  <menuitem id="menu_ruta_camiones_enrutamiento_categ" name="Enrutamiento" parent="menu_ruta_camiones_root" sequence="4"/>
+
+  </data>
+</odoo>

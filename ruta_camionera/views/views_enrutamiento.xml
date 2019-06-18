@@ -1,0 +1,317 @@
+<odoo>
+    <data>
+        <!-- views puntos de vuelta -->
+        <record id="view_puntos_vuelta_tree" model="ir.ui.view">
+            <field name="name">view.ruta.camionera.puntos_vuelta.tree</field>
+            <field name="model">ruta_camionera.puntos_vuelta</field>
+            <field name="arch" type="xml">
+            <tree string="Puntos de vueltas">
+                <field name="salida_inicio" widget="float_time"/>
+                <field name="salida_media" widget="float_time"/>
+                <field name="llegada_inicio" widget="float_time"/>
+            </tree>
+            </field>
+        </record>
+
+        <record id="view_puntos_vuelta_form" model="ir.ui.view">
+            <field name="name">view.ruta.camionera.puntos_vuelta.form</field>
+            <field name="model">ruta_camionera.puntos_vuelta</field>
+            <field name="arch" type="xml">
+            <form name="puntos_vuelta_form">
+                <sheet>
+                <div class="oe_title">
+                    <group>
+                        <field name="salida_inicio" widget="float_time"/>
+                        <field name="salida_media" widget="float_time"/>
+                        <field name="llegada_inicio" widget="float_time"/>
+                    </group>
+                </div>
+                </sheet>
+            </form>
+            </field>
+        </record>
+
+        <record id="action_puntos_vuelta_views" model="ir.actions.act_window">
+            <field name="name">Puntos vuelta</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">ruta_camionera.puntos_vuelta</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Puntos de vuelta
+            </p>
+            <p>
+                agregue un punto de vuelta
+            </p>
+            </field>
+        </record>
+        <menuitem id="menu_puntos_vuelta" name="Puntos de vuelta" parent="menu_ruta_camiones_enrutamiento_categ" action="action_puntos_vuelta_views" sequence="2"/>
+
+        <!-- vuelta -->
+        <record id="view_vuelta_tree" model="ir.ui.view">
+            <field name="name">view.ruta.camionera.vuelta.tree</field>
+            <field name="model">ruta_camionera.vuelta</field>
+            <field name="arch" type="xml">
+            <tree string="vueltas">
+                <field name="nombre" />
+                <field name="rinde" />
+            </tree>
+            </field>
+        </record>
+
+        <record id="view_vuelta_form" model="ir.ui.view">
+            <field name="name">view.ruta.camionera.vuelta.form</field>
+            <field name="model">ruta_camionera.vuelta</field>
+            <field name="arch" type="xml">
+            <form name="vuelta_form">
+                <sheet>
+                <div class="oe_title">
+                    <group>
+                    <field name="nombre" />
+                    <field name="rinde" />
+                    </group>
+                    <group>
+                        <group>
+                            <field name="matutino_inicio" />
+                            <field name="matutino_retorno" />
+                            <field name="matutino_fin" />
+                        </group>
+                        <field name="matutino" />
+                    </group>
+                    <group>
+                        <group>
+                            <field name="post_matutino_inicio" />
+                            <field name="post_matutino_retorno" />
+                            <field name="post_matutino_fin" />
+                        </group>
+                        <field name="post_matutino" />
+                    </group>
+                    <group>
+                        <group>
+                            <field name="post_post_matutino_inicio" />
+                            <field name="post_post_matutino_retorno" />
+                            <field name="post_post_matutino_fin" />
+                        </group>
+                        <field name="post_post_matutino" />
+                    </group>
+                    <group>
+                        <group>
+                            <field name="vespertino_inicio" />
+                            <field name="vespertino_retorno" />
+                            <field name="vespertino_fin" />
+                        </group>
+                        <field name="vespertino" />
+                    </group>
+                    <group>
+                        <group>
+                            <field name="post_vespertino_inicio" />
+                            <field name="post_vespertino_retorno" />
+                            <field name="post_vespertino_fin" />
+                        </group>
+                        <field name="post_vespertino" />
+                    </group>
+                </div>
+                </sheet>
+            </form>
+            </field>
+        </record>
+
+        <record id="action_vuelta_views" model="ir.actions.act_window">
+            <field name="name">Vuelta</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">ruta_camionera.vuelta</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Vueltas
+            </p>
+            <p>
+                agregue un punto de vuelta
+            </p>
+            </field>
+        </record>
+        <menuitem id="menu_vuelta" name="Vueltas" parent="menu_ruta_camiones_enrutamiento_categ" action="action_vuelta_views" sequence="3"/>
+        
+        <!-- views puntos -->
+        <record id="view_punto_tree" model="ir.ui.view">
+            <field name="name">view.ruta.camionera.punto.tree</field>
+            <field name="model">ruta_camionera.punto</field>
+            <field name="arch" type="xml">
+            <tree string="Puntos de vueltas">
+                <field name="nombre"/>
+            </tree>
+            </field>
+        </record>
+
+        <record id="view_punto_form" model="ir.ui.view">
+            <field name="name">view.ruta.camionera.punto.form</field>
+            <field name="model">ruta_camionera.punto</field>
+            <field name="arch" type="xml">
+            <form name="punto_form">
+                <sheet>
+                <div class="oe_title">
+                    <group>
+                        <field name="nombre"/>
+                    </group>
+                </div>
+                </sheet>
+            </form>
+            </field>
+        </record>
+
+        <record id="action_punto_views" model="ir.actions.act_window">
+            <field name="name">Puntos</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">ruta_camionera.punto</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Puntos
+            </p>
+            <p>
+                agregue un punto
+            </p>
+            </field>
+        </record>
+        <menuitem id="menu_punto" name="Puntos" parent="menu_ruta_camiones_enrutamiento_categ" action="action_punto_views" sequence="3"/>
+
+        <!-- views cronograma semanal -->
+        <record id="view_cronograma_semanal_tree" model="ir.ui.view">
+            <field name="name">view.ruta.camionera.cronograma_semanal.tree</field>
+            <field name="model">ruta_camionera.cronograma_semanal</field>
+            <field name="arch" type="xml">
+            <tree string="Cronograma Semanal">
+                <field name="vuelta"/>
+                <field name="unidad"/>
+                <field name="variante_ruta"/>
+            </tree>
+            </field>
+        </record>
+
+        <record id="view_cronograma_semanal_form" model="ir.ui.view">
+            <field name="name">view.ruta.camionera.cronograma_semanal.form</field>
+            <field name="model">ruta_camionera.cronograma_semanal</field>
+            <field name="arch" type="xml">
+            <form name="cronograma_semanal_form">
+                <sheet>
+                <div class="oe_title">
+                    <group>
+                        <field name="vuelta"/>
+                        <field name="unidad"/>
+                        <field name="variante_ruta"/>
+                    </group>
+                </div>
+                </sheet>
+            </form>
+            </field>
+        </record>
+
+        <record id="action_cronograma_semanal_views" model="ir.actions.act_window">
+            <field name="name">Cronograma Semanal</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">ruta_camionera.cronograma_semanal</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Cronograma Semanal
+            </p>
+            <p>
+                agregue uno
+            </p>
+            </field>
+        </record>
+        <menuitem id="menu_cronograma_semanal" name="Cronograma Semanal" parent="menu_ruta_camiones_enrutamiento_categ" action="action_cronograma_semanal_views" sequence="4"/>
+
+         <!-- semana inicial -->
+        <record id="view_semana_inicial_tree" model="ir.ui.view">
+            <field name="name">view.ruta.camionera.semana_inicial.tree</field>
+            <field name="model">ruta_camionera.semana_inicial</field>
+            <field name="arch" type="xml">
+            <tree string="semana inicial">
+                <field name="semana_inicial"/>
+            </tree>
+            </field>
+        </record>
+
+        <record id="view_semana_inicial_form" model="ir.ui.view">
+            <field name="name">view.ruta.camionera.semana_inicial.form</field>
+            <field name="model">ruta_camionera.semana_inicial</field>
+            <field name="arch" type="xml">
+            <form name="semana_inicial_form">
+                <sheet>
+                <div class="oe_title">
+                    <group>
+                        <field name="semana_inicial"/>
+                    </group>
+                </div>
+                </sheet>
+            </form>
+            </field>
+        </record>
+
+        <record id="action_semana_inicial_views" model="ir.actions.act_window">
+            <field name="name">semana inicial</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">ruta_camionera.semana_inicial</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                semana inicial
+            </p>
+            <p>
+                agregue uno
+            </p>
+            </field>
+        </record>
+        <menuitem id="menu_semana_inicial" name="semana inicial" parent="menu_ruta_camiones_enrutamiento_categ" action="action_semana_inicial_views" sequence="6"/>
+        
+        <!-- variante ruta  -->
+        <record id="view_variante_ruta_tree" model="ir.ui.view">
+            <field name="name">view.ruta.camionera.variante_ruta.tree</field>
+            <field name="model">ruta_camionera.variante_ruta</field>
+            <field name="arch" type="xml">
+            <tree string="Variante Ruta">
+                <field name="nombre"/>
+            </tree>
+            </field>
+        </record>
+
+        <record id="view_variante_ruta_form" model="ir.ui.view">
+            <field name="name">view.ruta.camionera.variante_ruta.form</field>
+            <field name="model">ruta_camionera.variante_ruta</field>
+            <field name="arch" type="xml">
+            <form name="variante_ruta_form">
+                <sheet>
+                <div class="oe_title">
+                    <group>
+                        <field name="nombre"/>
+                    </group>
+                </div>
+                </sheet>
+            </form>
+            </field>
+        </record>
+
+        <record id="action_variante_ruta_views" model="ir.actions.act_window">
+            <field name="name">Variante ruta</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">ruta_camionera.variante_ruta</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Variante ruta
+            </p>
+            <p>
+                agregue uno
+            </p>
+            </field>
+        </record>
+        <menuitem id="menu_variante_ruta" name="Variante ruta" parent="menu_ruta_camiones_enrutamiento_categ" action="action_variante_ruta_views" sequence="5"/>
+    </data>
+</odoo>

@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_ruta_camionera_ruta_camionera,ruta_camionera.ruta_camionera,model_ruta_camionera_ruta_camionera,,1,1,1,1
+access_ruta_camionera_camion,ruta_camionera.camion,model_ruta_camionera_camion,,1,1,1,1
+access_ruta_camionera_puntos_vuelta,ruta_camionera.puntos_vuelta,model_ruta_camionera_puntos_vuelta,,1,1,1,1
+access_ruta_camionera_vuelta,ruta_camionera.vuelta,model_ruta_camionera_vuelta,,1,1,1,1
+access_ruta_camionera_punto,ruta_camionera.punto,model_ruta_camionera_punto,,1,1,1,1
+access_ruta_camionera_cronograma_semanal,ruta_camionera.cronograma_semanal,model_ruta_camionera_cronograma_semanal,,1,1,1,1
+access_ruta_camionera_semana_inicial,ruta_camionera.semana_inicial,model_ruta_camionera_semana_inicial,,1,1,1,1
+access_ruta_camionera_variante_ruta,ruta_camionera.variante_ruta,model_ruta_camionera_variante_ruta,,1,1,1,1

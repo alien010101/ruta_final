@@ -1,0 +1,80 @@
+<odoo>
+    <data>
+    <!-- view form de fecha de inicio y fin -->
+        <!-- reporte diario OPerador -->
+    <record model="ir.ui.view" id="reporte_ruta_report_wizard" >
+        <field name="name">reporte wizard form</field>
+        <field name="model">ruta.reporte.wizard</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Detalles de ruta">
+                <group>
+                    <group>
+                        <field name="date_start"/>
+                    </group>
+                    <group>
+                        <field name="date_end"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="get_report" string="Reporte" type="object" class="oe_highlight"/>
+                    <button string="Cancelar" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+        <!-- reporte diario dueño -->
+    <record model="ir.ui.view" id="reporte_duenio_ruta_report_wizard" >
+        <field name="name">reporte duenio wizard form</field>
+        <field name="model">ruta.reporte.duenio.wizard</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Detalles de Dueños">
+                <group>
+                    <group>
+                        <field name="date_start"/>
+                    </group>
+                    <group>
+                        <field name="date_end"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="get_report" string="Reporte" type="object" class="oe_highlight"/>
+                    <button string="Cancelar" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- action del menuitem -->
+        <!-- action del reporte diario -->
+    <act_window id="action_reporte_ruta_report_wizard"
+            name="Reporte de ruta"
+            res_model="ruta.reporte.wizard"
+            view_mode="form"
+            target="new"/>
+
+        <!-- reporte diario dueño -->
+    <act_window id="action_reporte_ruta_duenio_report_wizard"
+            name="Reporte de ruta dueño"
+            res_model="ruta.reporte.duenio.wizard"
+            view_mode="form"
+            target="new"/>
+
+       <!-- menuitem -->
+       <!-- reporte diario -->
+    <menuitem action="action_reporte_ruta_report_wizard"
+            id="menu_ruta_reporte_wizard"
+            parent="ruta_camionera.menu_ruta_camiones_reporte_categ"
+            sequence="10"/>
+
+        <!-- reporte diario duenio -->
+    <menuitem action="action_reporte_ruta_duenio_report_wizard"
+            id="menu_ruta_reporte_duenio_wizard"
+            parent="ruta_camionera.menu_ruta_camiones_reporte_categ"
+            sequence="20"/>
+
+
+    </data>
+</odoo>

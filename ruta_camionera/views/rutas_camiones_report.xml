@@ -1,0 +1,120 @@
+<odoo>
+    <!-- papel configuracion -->
+    <record model="report.paperformat" id="paperformat_ruta_report">
+        <field name="name">paperformat.ruta.recap.report</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_width">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">30</field>
+        <field name="margin_right">5</field>
+        <field name="margin_bottom">10</field>
+        <field name="margin_left">5</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">20</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <!-- action del template -->
+    <report id="recap_report"
+            model="ruta.reporte.wizard"
+            string="Reporte de ruta"
+            report_type="qweb-pdf"
+            name="ruta_camionera.ruta_report_view"
+            paperformat="paperformat_ruta_report"
+            menu="False"/>
+
+    <!-- template IMPORTANTEEEE tiene que tenener el mismo nombre que la clase del procesamiento de datos -->
+    <template id="ruta_report_view">
+        <t t-call="web.html_container">
+            <div class="header" style="border-bottom: 2px solid black">
+                <h3 class="text-center">Reporte de ruta</h3>
+                <h4 class="text-center">
+                    <strong>de </strong>:
+                    <t t-esc="date_start"/>
+                    <strong> - </strong>:
+                    <t t-esc="date_end"/>
+                </h4>
+            </div>
+            <div class="article">
+                <table class="table table-condensed table-bordered" style="width: 100%">
+                    <thead>
+                        <th class="text-center">Unidad</th>
+                        <th class="text-center">Operador</th>
+                        <th class="text-center">Vueltas</th>
+                        <th class="text-center">Boletos normal</th>
+                        <th class="text-center">Boletos trasvale</th>
+                        <th class="text-center">Boletos Niño</th>
+                        <th class="text-center">Total</th>
+                        <th class="text-center">Oficina</th>
+                        <th class="text-center">Cantidad balas</th>
+                        <th class="text-center">Total operador</th>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="docs" t-as="doc">
+                            <tr>
+                                <td>
+                                    <span t-esc="doc['unidad']"/>
+                                </td>
+                                <td class="text-center">
+                                    <span t-esc="doc['conductor']"/>
+                                </td>
+                                <td class="text-center">
+                                    <span t-esc="'%.2f'% doc['vueltas-totales']"/>
+                                </td>
+                                <td class="text-center">
+                                    <span t-esc="doc['b-normal']"/>
+                                </td>
+                                <td class="text-center">
+                                    <span t-esc="doc['b-trasvale']"/>
+                                </td>
+                                <td class="text-center">
+                                    <span t-esc="doc['b-ninio']"/>
+                                </td>
+                                <td class="text-center">
+                                    <span t-esc="doc['boletos-total']"/>
+                                </td>
+                                <td class="text-center">
+                                    <span t-esc="'%.2f'% doc['oficina']"/>
+                                </td>
+                                <td class="text-center">
+                                    <span t-esc="doc['balas']"/>
+                                </td>
+                                <td class="text-center">
+                                    <span t-esc="'%.2f'% doc['total-operador']"/>
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+                <div>
+                    <p>Total a repartir excedente: <span t-esc="'%.2f'% pie['total-repartir-excedente']"/></p>
+                    <p>Operadores: <span t-esc="pie['operadores']"/></p>
+                    <p>Operador por vuelta: <span t-esc="'%.2f'% pie['operador-x-vuelta']"/></p>
+                    <p>Séptimo día: <span t-esc="'%.2f'% pie['septimo-dia']"/></p>
+                    <p>Vueltas totales: <span t-esc="'%.2f'% pie['vueltas-totales']"/></p>
+                    <p>Total boletos vendidos: <span t-esc="'%.2f'% pie['total-boletos-vendidos']"/></p>
+                    <p>Boletos promedio por vuelta: <span t-esc="'%.2f'% pie['boletos-promedio-x-vuelta']"/></p>
+                    <p>Ganancia operador: <span t-esc="pie['ganancia-operador']"/></p>
+                </div>
+            </div>
+            <div class="footer">
+                <div class="row text-center" style="border-top: 1px solid black;">
+                    <div class="col col-3 offset-9 text-right">
+                        <ul class="list-inline mt-2">
+                            <li class="list-inline-item">Page:</li>
+                            <li class="list-inline-item">
+                                <span class="page"/>
+                            </li>
+                            <li class="list-inline-item">/</li>
+                            <li class="list-inline-item">
+                                <span class="topage"/>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

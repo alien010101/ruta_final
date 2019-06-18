@@ -1,0 +1,285 @@
+<odoo>
+    <data>
+        <!-- reporte enrutamiento -->
+    <record model="ir.ui.view" id="reporte_enrutamiento_report_wizard" >
+        <field name="name">reporte wizard form</field>
+        <field name="model">enrutamiento.reporte.wizard</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Detalles de enrutamiento">
+                <group>
+                    <field name="variante_ruta" />
+                </group>
+                <group>
+                    <field name="unidad" />
+                </group>
+                <group>
+                    <group>
+                        <field name="semana_actual" />
+                    </group>
+                    <group>
+                        <field name="semana_inicial" />
+                    </group>
+                </group>
+                <footer>
+                    <button name="get_report" string="Reporte" type="object" class="oe_highlight"/>
+                    <button string="Cancelar" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- action del enrutamiento -->
+    <act_window id="action_reporte_enrutamiento_report_wizard"
+            name="Reporte de enrutamiento"
+            res_model="enrutamiento.reporte.wizard"
+            view_mode="form"
+            target="new"/>
+    
+    <!-- menuitem del enrutamiento report -->
+    <menuitem action="action_reporte_enrutamiento_report_wizard"
+            id="menu_enrutamiento_reporte_wizard"
+            parent="ruta_camionera.menu_ruta_camiones_enrutamiento_categ"
+            sequence="30"/>
+    <!-- papel configuracion -->
+    <record model="report.paperformat" id="paperformat_enrutamiento_report">
+        <field name="name">paperformat.enrutamiento.recap.report</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_width">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">30</field>
+        <field name="margin_right">5</field>
+        <field name="margin_bottom">10</field>
+        <field name="margin_left">5</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">20</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <!-- action del template -->
+    <report id="enrutamiento_report"
+            model="enrutamiento.reporte.wizard"
+            string="Reporte de enrutamiento"
+            report_type="qweb-pdf"
+            name="ruta_camionera.enrutamiento_report_view"
+            paperformat="paperformat_enrutamiento_report"
+            menu="False"/>
+
+    <!-- template IMPORTANTEEEE tiene que tenener el mismo nombre que la clase del procesamiento de datos -->
+    <template id="enrutamiento_report_view">
+        <t t-call="web.html_container">
+            <div class="header" style="border-bottom: 2px solid black">
+                <h3 class="text-center">Reporte de enrutamiento - <t t-esc="diferencia"/></h3>
+                <p>Semana: <t t-esc="semana_actual"/> -- fecha: <t t-esc="fecha"/></p>
+            </div>
+            <div class="article">
+
+                <h1 class="text-center">RUTA 615</h1>
+                <p class="text-center">HOSPICIO-VOCACIONAL</p>
+                <br />
+                <br />
+                <h1>Primer Turno -- unidad:  <t t-esc="unidad_captura"/></h1>
+                <!-- matutino -->
+                <table class="table table-condensed table-bordered" style="width: 100%">
+                    <thead>
+                        <th class="text-center"><t t-esc="vueltas_salida['matutino_inicio']"/></th>
+                        <th class="text-center">BOLETOS</th>
+                        <th class="text-center"><t t-esc="vueltas_salida['matutino_retorno']"/></th>
+                        <th class="text-center">BOLETOS</th>
+                        <th class="text-center"><t t-esc="vueltas_salida['matutino_fin']"/></th>
+                    </thead>
+
+                    <tbody>
+                        <t t-foreach="matutinos" t-as="doc">
+                            <tr>
+                                <td class="text-center" rowspan="2">
+                                    <t t-esc="'%02d:%02d' % (int(doc['salida_inicio']),doc['salida_inicio']% 1 * 60)"/>
+                                </td>
+                                <td>
+                                </td>
+                                <td class="text-center" rowspan="2">
+                                    <t t-esc="'%02d:%02d' % (int(doc['salida_media']),doc['salida_media']% 1 * 60)"/>
+                                </td>
+                                <td>
+                                </td>
+                                <td class="text-center" rowspan="2">
+                                    <t t-esc="'%02d:%02d' % (int(doc['llegada_inicio']),doc['llegada_inicio']% 1 * 60)"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </t>
+                    </tbody>
+                    <!-- post matutino -->
+                    <thead t-if="vueltas_salida['tiene_post_matu']">
+                        <th t-if="vueltas_salida['tiene_post_matu']" class="text-center"><t t-esc="vueltas_salida['post_matutino_inicio']"/></th>
+                        <th t-if="vueltas_salida['tiene_post_matu']" class="text-center">BOLETOS</th>
+                        <th t-if="vueltas_salida['tiene_post_matu']" class="text-center"><t t-esc="vueltas_salida['post_matutino_retorno']"/></th>
+                        <th t-if="vueltas_salida['tiene_post_matu']" class="text-center">BOLETOS</th>
+                        <th t-if="vueltas_salida['tiene_post_matu']" class="text-center"><t t-esc="vueltas_salida['post_matutino_fin']"/></th>
+                    </thead>
+                    <tbody t-if="vueltas_salida['tiene_post_matu']">
+                        <t t-foreach="post_matutinos" t-as="doc">
+                            <tr>
+                                <td class="text-center" rowspan="2">
+                                    <t t-esc="'%02d:%02d' % (int(doc['salida_inicio']),doc['salida_inicio']% 1 * 60)"/>
+                                </td>
+                                <td>
+                                </td>
+                                <td class="text-center" rowspan="2">
+                                    <t t-esc="'%02d:%02d' % (int(doc['salida_media']),doc['salida_media']% 1 * 60)"/>
+                                </td>
+                                <td>
+                                </td>
+                                <td class="text-center" rowspan="2">
+                                    <t t-esc="'%02d:%02d' % (int(doc['llegada_inicio']),doc['llegada_inicio']% 1 * 60)"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </t>
+                    </tbody>
+                    <!-- postpost matutio -->
+                    <thead t-if="vueltas_salida['tiene_post_post_matu']">
+                        <th t-if="vueltas_salida['tiene_post_post_matu']" class="text-center"><t t-esc="vueltas_salida['post_post_matutino_inicio']"/></th>
+                        <th t-if="vueltas_salida['tiene_post_post_matu']" class="text-center">BOLETOS</th>
+                        <th t-if="vueltas_salida['tiene_post_post_matu']" class="text-center"><t t-esc="vueltas_salida['post_post_matutino_retorno']"/></th>
+                        <th t-if="vueltas_salida['tiene_post_post_matu']" class="text-center">BOLETOS</th>
+                        <th t-if="vueltas_salida['tiene_post_post_matu']" class="text-center"><t t-esc="vueltas_salida['post_post_matutino_fin']"/></th>
+                    </thead>
+                    <tbody t-if="vueltas_salida['tiene_post_post_matu']">
+                        <t t-foreach="post_post_matutinos" t-as="doc">
+                            <tr>
+                                <td class="text-center" rowspan="2">
+                                    <t t-esc="'%02d:%02d' % (int(doc['salida_inicio']),doc['salida_inicio']% 1 * 60)"/>
+                                </td>
+                                <td>
+                                </td>
+                                <td class="text-center" rowspan="2">
+                                    <t t-esc="'%02d:%02d' % (int(doc['salida_media']),doc['salida_media']% 1 * 60)"/>
+                                </td>
+                                <td>
+                                </td>
+                                <td class="text-center" rowspan="2">
+                                    <t t-esc="'%02d:%02d' % (int(doc['llegada_inicio']),doc['llegada_inicio']% 1 * 60)"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+
+                <h1>Segundo Turno -- unidad:  <t t-esc="unidad_captura"/></h1>
+                <!-- vespertino -->
+                <table class="table table-condensed table-bordered" style="width: 100%">
+                    <thead>
+                        <th class="text-center"><t t-esc="vueltas_salida['vespertino_inicio']"/></th>
+                        <th class="text-center">BOLETOS</th>
+                        <th class="text-center"><t t-esc="vueltas_salida['vespertino_retorno']"/></th>
+                        <th class="text-center">BOLETOS</th>
+                        <th class="text-center"><t t-esc="vueltas_salida['vespertino_fin']"/></th>
+                    </thead>
+
+                    <tbody>
+                        <t t-foreach="vespertinos" t-as="doc">
+                            <tr>
+                                <td class="text-center" rowspan="2">
+                                    <t t-esc="'%02d:%02d' % (int(doc['salida_inicio']),doc['salida_inicio']% 1 * 60)"/>
+                                </td>
+                                <td>
+                                </td>
+                                <td class="text-center" rowspan="2">
+                                    <t t-esc="'%02d:%02d' % (int(doc['salida_media']),doc['salida_media']% 1 * 60)"/>
+                                </td>
+                                <td>
+                                </td>
+                                <td class="text-center" rowspan="2">
+                                    <t t-esc="'%02d:%02d' % (int(doc['llegada_inicio']),doc['llegada_inicio']% 1 * 60)"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </t>
+                    </tbody>
+                    <!-- post_vespertinos -->
+                    <thead t-if="vueltas_salida['tiene_post_vesp']">
+                        <th t-if="vueltas_salida['tiene_post_vesp']" class="text-center"><t t-esc="vueltas_salida['post_vespertino_inicio']"/></th>
+                        <th t-if="vueltas_salida['tiene_post_vesp']" class="text-center">BOLETOS</th>
+                        <th t-if="vueltas_salida['tiene_post_vesp']" class="text-center"><t t-esc="vueltas_salida['post_vespertino_retorno']"/></th>
+                        <th t-if="vueltas_salida['tiene_post_vesp']" class="text-center">BOLETOS</th>
+                        <th t-if="vueltas_salida['tiene_post_vesp']" class="text-center"><t t-esc="vueltas_salida['post_vespertino_fin']"/></th>
+                    </thead>
+                    <tbody t-if="vueltas_salida['tiene_post_vesp']">
+                        <t t-foreach="post_vespertinos" t-as="doc">
+                            <tr>
+                                <td class="text-center" rowspan="2">
+                                    <t t-esc="'%02d:%02d' % (int(doc['salida_inicio']),doc['salida_inicio']% 1 * 60)"/>
+                                </td>
+                                <td>
+                                </td>
+                                <td class="text-center" rowspan="2">
+                                    <t t-esc="'%02d:%02d' % (int(doc['salida_media']),doc['salida_media']% 1 * 60)"/>
+                                </td>
+                                <td>
+                                </td>
+                                <td class="text-center" rowspan="2">
+                                    <t t-esc="'%02d:%02d' % (int(doc['llegada_inicio']),doc['llegada_inicio']% 1 * 60)"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+                <br />
+                <br />
+                <table class="table table-condensed table-bordered" style="width: 100%">
+                    <thead>
+                        <th class="text-center">Vueltas dadas</th>
+                        <th class="text-center"></th>
+                        <th class="text-center">Jauja</th>
+                        <th class="text-center"></th>
+                        <th class="text-center">Hospicio</th>
+                        <th class="text-center"></th>
+                        <th class="text-center">Civil</th>
+                        <th class="text-center"></th>
+                        <th class="text-center">CUT</th>
+                        <th class="text-center"></th>
+                        <th class="text-center">Voca</th>
+                        <th class="text-center"></th>
+                    </thead>
+                </table>
+            </div>
+            <div class="footer">
+                <div class="row text-center" style="border-top: 1px solid black;">
+                    <div class="col col-3 offset-9 text-right">
+                        <ul class="list-inline mt-2">
+                            <li class="list-inline-item">página:</li>
+                            <li class="list-inline-item">
+                                <span class="page"/>
+                            </li>
+                            <li class="list-inline-item">/</li>
+                            <li class="list-inline-item">
+                                <span class="topage"/>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+    </data>
+</odoo>
